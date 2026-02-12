@@ -56,8 +56,8 @@ cat <<EOF > "${GPU_SLURM_SCRIPT}"
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --mem=60GB
-#SBATCH --gres=gpu:h200:1
-#SBATCH --time=10:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --time=8:00:00
 #SBATCH --partition=${PARTITION}
 #SBATCH --output=${GPU_LOG_FILE}
 #SBATCH --dependency=afterok:${CPU_JOB_ID}
