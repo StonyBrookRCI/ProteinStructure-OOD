@@ -32,6 +32,40 @@ $(document).ready(function() {
       }
   }
 
+  function updateQueueOptions() {
+    var sessionType = $('#batch_connect_session_context_session_type').val();
+    var $queueSelect = $('#batch_connect_session_context_custom_queue');
+
+    // Fallback in case the ID changes in future OOD versions/themes
+    if ($queueSelect.length === 0) {
+        $queueSelect = $('select[name="batch_connect_session_context[custom_queue]"]');
+    }
+    if ($queueSelect.length === 0) return;
+
+    var allowedQueues = [];
+    if (sessionType === 'AlphaFold 2') {
+        allowedQueues = ['h200x4', 'h200x8'];
+    } else if (sessionType === 'AlphaFold 3') {
+        allowedQueues = ['h200x4', 'h200x8', 'b40x4'];
+    } else {
+        // If session type is unexpected, don't mutate the queue list
+        return;
+    }
+
+    var current = $queueSelect.val();
+    $queueSelect.empty();
+
+    allowedQueues.forEach(function(q) {
+        var $opt = $('<option></option>').attr('value', q).text(q);
+        $queueSelect.append($opt);
+    });
+
+    if (allowedQueues.includes(current)) {
+        $queueSelect.val(current);
+    } else {
+        $queueSelect.val(allowedQueues[0]);
+    }
+}
   function isValidFASTA(sequence) {
       const fastaPattern = /^>.*\n([A-Za-z\n]+)$/;
       return fastaPattern.test(sequence);
@@ -119,8 +153,10 @@ $(document).ready(function() {
   $('#batch_connect_session_context_session_type').change(function() {
       updateProteinSequenceField();
       updateFormVisibility();
+      updateQueueOptions(); 	  
   });
 
   updateProteinSequenceField();
   updateFormVisibility();
+  updateQueueOptions();
 });

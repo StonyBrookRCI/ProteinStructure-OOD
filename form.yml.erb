@@ -5,7 +5,8 @@ cluster: "nvwulf"
 form:
   - session_type
  # - auto_accounts
-  - auto_queues
+ #  - auto_queues
+  - custom_queue
   - working_directory
   - af3_params
   - protein_sequence
@@ -18,12 +19,21 @@ attributes:
     help: "Choose whether to use Alphafold 2 or Alphafold 3."
     widget: select
     options:
-      - ["AlphaFold 2", "AlphaFold 2", data-hide-agree-terms: true, data-set-agree-terms: true]
-      - ["AlphaFold 3", "AlphaFold 3", data-hide-agree-terms: false, data-set-agree-terms: false]
+      - ["AlphaFold 2", "AlphaFold 2", data-hide-agree-terms: true, data-set-agree-terms: true, data-hide-af3-params: true]
+      - ["AlphaFold 3", "AlphaFold 3", data-hide-agree-terms: false, data-set-agree-terms: false, data-hide-af3-params: false]
 
  # auto_accounts:
  #   label: "GPU Account"
  #   help: "Note: Account with access to GPU resources required"
+
+  custom_queue:
+    label: Queue
+    help: Please select a queue from the drop-down.
+    widget: select
+    options:
+      - [ "b40x4", "b40x4" ]
+      - [ "h200x4", "h200x4" ]
+      - [ "h200x8", "h200x8" ]
 
   protein_sequence:
     widget: text_area
